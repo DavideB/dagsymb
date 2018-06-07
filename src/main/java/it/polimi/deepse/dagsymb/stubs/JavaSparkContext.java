@@ -2,8 +2,6 @@ package it.polimi.deepse.dagsymb.stubs;
 
 import java.util.List;
 
-import it.polimi.deepse.dagsymb.examples.Utils;
-
 import jbse.meta.Analysis;
 
 public class JavaSparkContext {
@@ -21,7 +19,6 @@ public class JavaSparkContext {
 		JavaSparkContext.caller = caller;
 		if (!isJbseExecution()) {
 			SymbolicProducer.reset();
-			Utils.reset();
 		}
 	}
 
