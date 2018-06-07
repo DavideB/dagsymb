@@ -5,11 +5,8 @@
 
 import org.junit.Test;
 import it.polimi.deepse.dagsymb.examples.PromoCalls;
-import org.junit.runner.RunWith;
-import shaded.org.evosuite.runtime.EvoRunner;
 
-@RunWith(EvoRunner.class) @shaded.org.evosuite.runtime.EvoRunnerParameters(mockJVMNonDeterminism = true, useVNET = true, resetStaticState = true, separateClassLoader = true)
-public class PromoCalls_run_driver_PC_0_1_Test extends PromoCalls_run_driver_PC_0_1_Test_scaffolding {
+public class PromoCalls_run_driver_PC_0_1_Test {
 
   //Test case number: 0
   /*

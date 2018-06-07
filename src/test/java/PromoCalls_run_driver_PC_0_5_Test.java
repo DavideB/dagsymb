@@ -6,12 +6,8 @@
 import it.polimi.deepse.dagsymb.examples.UserCallDB;
 import org.junit.Test;
 import it.polimi.deepse.dagsymb.examples.PromoCalls;
-import org.junit.runner.RunWith;
-import shaded.org.evosuite.runtime.EvoRunner;
-import shaded.org.evosuite.runtime.EvoRunnerParameters;
 
-@RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVNET = true, resetStaticState = true, separateClassLoader = true) 
-public class PromoCalls_run_driver_PC_0_5_Test extends PromoCalls_run_driver_PC_0_5_Test_scaffolding {
+public class PromoCalls_run_driver_PC_0_5_Test {
 
   //Test case number: 0
   /*
@@ -22,7 +18,7 @@ public class PromoCalls_run_driver_PC_0_5_Test extends PromoCalls_run_driver_PC_
   @Test(timeout = 4000)
   public void test0() {
       PromoCalls promoCalls0 = new PromoCalls();
-      UserCallDB.addCallsToLast24HoursLocalCalls(1381, 1381);
+      promoCalls0.addToDatasetLast24HoursLocalCalls(1381, 1381);
       promoCalls0.run(1376, 1376, 1381, 1);
   }
 }
