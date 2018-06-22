@@ -3,14 +3,8 @@ package it.polimi.deepse.dagsymb.examples;
 /*GIO*///NB: Le parti annotate con il commento /*GIO*/ indicano le mie instrumentazioni del codice originale
 
 
-import jbse.meta.Analysis;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.hibernate.dialect.SybaseAnywhereDialect;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
 
 
 
@@ -30,6 +24,9 @@ import java.util.UUID;
  */
 
 
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaSparkContext;
+
 @SuppressWarnings("resource")
 public class PromoCalls {
     public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths){
@@ -48,10 +45,6 @@ public class PromoCalls {
                 .filter((Call o) -> o.getLength() > threshold).count();
 
         System.out.println("#PATH: 0");
-        System.out.println(localLongCalls+"");
-        System.out.println(UserCallDB.getLast24HoursLocalCalls().get(0).getLength()+"");
-        System.out.println(minLocalLongCalls+"");
-        System.out.println(z+"");
 
         if (localLongCalls > minLocalLongCalls || abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 1");

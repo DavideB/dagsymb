@@ -195,7 +195,7 @@ final public class Analysis {
 	 */
 	public static void assumeClassNotInitialized(String className) {
         try {
-            final Method m = ClassLoader.class.getDeclaredMethod("findLoadedClass", new Class[] { String.class });
+            final Method m = ClassLoader.class.getDeclaredMethod("findLoadedClass", String.class);
             m.setAccessible(true);
             final ClassLoader cl = ClassLoader.getSystemClassLoader();
             final Object c = m.invoke(cl, className.replace('/', '.'));
