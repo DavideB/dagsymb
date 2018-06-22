@@ -128,33 +128,6 @@ def gen_dags(path):
                     except KeyError:
                         None
 
-        # REPEATER = re.compile(r"(.+?)\1+$")
-        # def repeated(s):
-        #     match = REPEATER.match(s)
-        #     return match.group(1) if match else None
-        #
-        # # Find iterations
-        # lenparent = []
-        # for key in stageDict.keys():
-        #     lenparent.append(str(len(stageDict[key]['Parent IDs'])))
-        # i = 0
-        # stage_repeated = None
-        # while stage_repeated == None and i < len(lenparent):
-        #     stage_repeated = repeated("".join(lenparent[i:]))
-        #     i += 1
-        # print(i, stage_repeated)
-
-        # def setWeight(key):
-        #     for parentid in stageDict[key]['parentsIds']:
-        #         w1 = stageDict[key]["weight"] + 1
-        #         w2 = stageDict[parentid]["weight"]
-        #         stageDict[parentid]["weight"] = max(w1, w2)
-        #         setWeight(parentid)
-        #
-        # # Set weights
-        # for key in reversed(stageDict.keys()):
-        #     setWeight(key)
-
         stage_to_do = len(list(stage_dict.keys())) - len(skipped)
         for stage_id in sorted(stage_dict.keys()):
             parent_output = 0
@@ -196,7 +169,7 @@ def gen_dags(path):
 
         # Create json output
 
-        with open(path +"/"+ re.sub("[^a-zA-Z0-9.-]", "_", app_name)+"-"+str(log_index)+".json",
+        with open(os.path.join(path, re.sub("[^a-zA-Z0-9.-]", "_", app_name)+"-"+str(log_index)+".json"),
                   "w") as jsonoutput:
             json.dump(stage_dict, jsonoutput, indent=4, sort_keys=True)
         log_index += 1
