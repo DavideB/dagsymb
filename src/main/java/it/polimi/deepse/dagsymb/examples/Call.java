@@ -1,13 +1,12 @@
 package it.polimi.deepse.dagsymb.examples;
 
-import java.io.Serializable;
 
+import java.io.Serializable;
 
 public class Call implements Serializable
 {
-	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -2685443218382696366L;
+
 	private String callerId;
 	private String receiverId;
 	private int length;
