@@ -2,7 +2,7 @@ import sys
 import subprocess
 import os
 import shutil
-from processing import gen_dags
+from processing_nojobs import gen_dags
 
 def generate(jar_path, main_class_prefix):
     returncode = 0
@@ -23,10 +23,10 @@ def generate(jar_path, main_class_prefix):
     while not returncode:# and not stop:
         # command = ["docker", "run", "-v", jar_path+":/app.jar", "-v", events+":/tmp/spark-events", "gioquattrocchi/spark-dock", "/spark/bin/spark-submit", "--class", main_class_prefix+str(i), "--conf", "spark.eventLog.enabled=true", "/app.jar"]
         # command = ["docker", "run", "-v", jar_path_for_docker+":/app.jar", "-v", events_for_docker+":/tmp/spark-events", "epahomov/docker-spark:lightweighted", "/spark/bin/spark-submit", "--class", main_class_prefix+str(i), "--conf", "spark.eventLog.enabled=true", "/app.jar"]
-        command = ["docker", "run", "-v", jar_path_for_docker+":/app.jar", "-v", events_for_docker+":/tmp/spark-events", "epahomov/docker-spark", "/spark/bin/spark-submit", "--class", main_class_prefix+str(i), "--conf", "spark.eventLog.enabled=true", "/app.jar"]
+        # command = ["docker", "run", "-v", jar_path_for_docker+":/app.jar", "-v", events_for_docker+":/tmp/spark-events", "epahomov/docker-spark", "/spark/bin/spark-submit", "--class", main_class_prefix+str(i), "--conf", "spark.eventLog.enabled=true", "/app.jar"]
         # command = ["C:\\Users\\Fabio\\git\\xSpark\\bin\\spark-submit.cmd", "--class", "it.polimi.deepse.dagsymb.launchers.Launcher"+str(i), "--conf", "spark.eventLog.enabled=true", "/Users/Davide/git/dagsymb/target/dagsymb-1.0-jar-with-dependencies.jar"]
         # C:\Users\Davide\git\spark\bin\spark-submit.cmd --class it.polimi.deepse.dagsymb.launchers.Launcher0 --conf spark.eventLog.enabled=true /Users/Davide/git/dagsymb/target/dagsymb-1.0-jar-with-dependencies.jar
-        # command = ["C:\\Users\\Davide\\git\\spark\\bin\\spark-submit.cmd", "--class", "it.polimi.deepse.dagsymb.launchers.Launcher"+str(i), "--conf", "spark.eventLog.enabled=true", "/Users/Davide/git/dagsymb/target/dagsymb-1.0-jar-with-dependencies.jar"]
+        command = ["C:\\Users\\Davide\\git\\spark\\bin\\spark-submit.cmd", "--class", "it.polimi.deepse.dagsymb.launchers.Launcher"+str(i), "--conf", "spark.eventLog.enabled=true", "/Users/Davide/git/dagsymb/target/dagsymb-1.0-jar-with-dependencies.jar"]
         returncode = run_command(command)
         i += 1
         stop = True
@@ -51,5 +51,5 @@ def run_command(command):
 
 
 if __name__ == "__main__":
-     generate(sys.argv[1], sys.argv[2])
-     # gen_dags("target/data/tmp")
+     # generate(sys.argv[1], sys.argv[2])
+     gen_dags("target/data/tmp")

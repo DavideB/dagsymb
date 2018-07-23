@@ -18,7 +18,6 @@ def gen_dags(path):
                     if data["Event"] == "SparkListenerApplicationStart":
                         app_name = data["App Name"]
                         stage_dict["jobs"] = {}
-                        id_symbols = []
                     elif data["Event"] == "SparkListenerStageSubmitted":
                         # print(data)
                         stage = data["Stage Info"]
@@ -72,26 +71,20 @@ def gen_dags(path):
         with file_open as logfile:
             for line in logfile:
                 data = json.loads(line)
+                print(line)
                 try:
                     if data["Event"] == "SparkListenerJobStart":
-                        # print(data)
-                        job_id = data["Job ID"]
+                        job_id = data["Job_ID"]
                         stage_dict["jobs"][job_id] = {}
-                        # print(stage_dict["jobs"])
-                        id_symb_root = sorted(data["Stage Infos"], 
-                                              key = lambda k: k["Stage ID"])[-1]["Stage Name"]\
-                                              .replace(" at ", "_") + "_"
-                        seq = 0
-                        while id_symb_root + str(seq) in id_symbols:
-                            seq += 1
-                        id_symb = id_symb_root + str(seq)
-                        id_symbols.append(id_symb)
-                        stage_dict["jobs"][job_id]["id-symb"] = id_symb
-                        stage_dict["jobs"][job_id]["stages"] = sorted(data["Stage IDs"]) 
+                        print(stage_dict["jobs"])
+                        stage_dict["jobs"][job_id]["id-symb"] = ""
+                        print(stage_dict["jobs"])
+                        stage_dict["jobs"][job_id]["stages"] = []
+                        print(stage_dict["jobs"])
                         
                         for stage in data["Stage Infos"]:
                             stage_id = stage["Stage ID"]
-                            # stage_dict["jobs"][job_id]["stages"].append(stage_id) 
+                            stage_dict["jobs"][job_id]["stages"].append(stage_id) 
                             if stage["Stage ID"] not in stage_dict.keys():
                                 stage_dict[stage_id] = {}
                                 stage_dict[stage_id]["name"] = stage['Stage Name']
@@ -120,19 +113,18 @@ def gen_dags(path):
                                 skipped.append(stage_id)
                 except KeyError:
                     None
-        
-        stage_dict_key_stages = [k for k in stage_dict.keys() if k != "jobs"]
+
         # Replace skipped stage id in parents ids based on RDD IDs
         for skipped_id in skipped:
-            for stage_id1 in stage_dict_key_stages: #stage_dict.keys():
+            for stage_id1 in stage_dict.keys():
                 if stage_id1 != skipped_id and stage_dict[skipped_id]["RDDIds"] == \
                         stage_dict[stage_id1]["RDDIds"]:
-                    for stage_id2 in stage_dict_key_stages: #stage_dict.keys():
+                    for stage_id2 in stage_dict.keys():
                         if skipped_id in stage_dict[stage_id2]["parentsIds"]:
                             stage_dict[stage_id2]["parentsIds"].remove(skipped_id)
                             stage_dict[stage_id2]["parentsIds"].append(stage_id1)
         
-        # stage_dict_key_stages = [k for k in stage_dict.keys() if k != "jobs"]
+        stage_dict_key_stages = [k for k in stage_dict.keys() if k != "jobs"]
         for stage in stage_dict_key_stages:
             if len(stage_dict[stage]["parentsIds"]) == 0:
                 try:
@@ -188,7 +180,7 @@ def gen_dags(path):
                 totalduration -= stage_dict[key]["duration"]
 
         # Create json output
-        stage_dict_sorted = stage_dict["jobs"]
+
         with open(os.path.join(path, re.sub("[^a-zA-Z0-9.-]", "_", app_name)+"-"+str(log_index)+".json"),
                   "w") as jsonoutput:
             json.dump(stage_dict, jsonoutput, indent=4, sort_keys=False)

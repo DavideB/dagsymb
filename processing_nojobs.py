@@ -17,8 +17,8 @@ def gen_dags(path):
                 try:
                     if data["Event"] == "SparkListenerApplicationStart":
                         app_name = data["App Name"]
-                        stage_dict["jobs"] = {}
-                        id_symbols = []
+                        #stage_dict["jobs"] = {}
+                        #id_symbols = []
                     elif data["Event"] == "SparkListenerStageSubmitted":
                         # print(data)
                         stage = data["Stage Info"]
@@ -75,19 +75,19 @@ def gen_dags(path):
                 try:
                     if data["Event"] == "SparkListenerJobStart":
                         # print(data)
-                        job_id = data["Job ID"]
-                        stage_dict["jobs"][job_id] = {}
+                        #job_id = data["Job ID"]
+                        #stage_dict["jobs"][job_id] = {}
                         # print(stage_dict["jobs"])
-                        id_symb_root = sorted(data["Stage Infos"], 
-                                              key = lambda k: k["Stage ID"])[-1]["Stage Name"]\
-                                              .replace(" at ", "_") + "_"
-                        seq = 0
-                        while id_symb_root + str(seq) in id_symbols:
-                            seq += 1
-                        id_symb = id_symb_root + str(seq)
-                        id_symbols.append(id_symb)
-                        stage_dict["jobs"][job_id]["id-symb"] = id_symb
-                        stage_dict["jobs"][job_id]["stages"] = sorted(data["Stage IDs"]) 
+                        #id_symb_root = sorted(data["Stage Infos"], 
+                        #                      key = lambda k: k["Stage ID"])[-1]["Stage Name"]\
+                        #                      .replace(" at ", "_") + "_"
+                        #seq = 0
+                        #while id_symb_root + str(seq) in id_symbols:
+                        #    seq += 1
+                        #id_symb = id_symb_root + str(seq)
+                        #id_symbols.append(id_symb)
+                        #stage_dict["jobs"][job_id]["id-symb"] = id_symb
+                        #stage_dict["jobs"][job_id]["stages"] = sorted(data["Stage IDs"]) 
                         
                         for stage in data["Stage Infos"]:
                             stage_id = stage["Stage ID"]
@@ -188,8 +188,8 @@ def gen_dags(path):
                 totalduration -= stage_dict[key]["duration"]
 
         # Create json output
-        stage_dict_sorted = stage_dict["jobs"]
+        #stage_dict_sorted = stage_dict["jobs"]
         with open(os.path.join(path, re.sub("[^a-zA-Z0-9.-]", "_", app_name)+"-"+str(log_index)+".json"),
                   "w") as jsonoutput:
-            json.dump(stage_dict, jsonoutput, indent=4, sort_keys=False)
+            json.dump(stage_dict, jsonoutput, indent=4, sort_keys=True)
         log_index += 1
