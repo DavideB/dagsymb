@@ -31,6 +31,9 @@ def generate(jar_path, main_class_prefix):
         i += 1
         stop = True
     
+    for filename in os.listdir(events):
+        os.chmod(os.path.join(events, filename), 0o776)
+        
     gen_dags(events)
     
     for filename in os.listdir(events):

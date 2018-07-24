@@ -30,7 +30,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 @SuppressWarnings("resource")
 public class PromoCalls {
     public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths){
-        JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample").setMaster("local[4]"));
+        JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/);
         long z = sc.parallelize(UserCallDB.getLast24HoursLocalCalls()).count();
         long localLongCalls = sc.parallelize(UserCallDB.getLast24HoursLocalCalls())
                 .filter((Call o) ->{
