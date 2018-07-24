@@ -188,8 +188,9 @@ def gen_dags(path):
                 totalduration -= stage_dict[key]["duration"]
 
         # Create json output
-        stage_dict_sorted = stage_dict["jobs"]
+        stage_dict[0]["jobs"] = stage_dict["jobs"]
+        stage_dict.pop("jobs")
         with open(os.path.join(path, re.sub("[^a-zA-Z0-9.-]", "_", app_name)+"-"+str(log_index)+".json"),
                   "w") as jsonoutput:
-            json.dump(stage_dict, jsonoutput, indent=4, sort_keys=False)
+            json.dump(stage_dict, jsonoutput, indent=4, sort_keys=True)
         log_index += 1
