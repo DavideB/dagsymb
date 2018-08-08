@@ -35,9 +35,9 @@ public class GuardEvaluatorTest {
 		Map<String, Object> values = new HashMap<>();
 		values.put("arg0", "110");
 		values.put("arg1", "2000");
-		values.put("count_PromoCallsFile.java:29_0", 2000L);
+		values.put("count_PromoCalls.java:42_0", 2000L);
 		values.put("arg2", "2000");
-		values.put("count_PromoCallsFile.java:33_0", 3000L);
+		values.put("count_PromoCalls.java:45_0", 3000L);
 		
 		
 		IGuardEvaluator evaluator = new GuardEvaluatorPromoCallsFile();
