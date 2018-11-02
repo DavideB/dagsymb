@@ -42,7 +42,7 @@ public class Utils
 		JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);
 		//Get configuration of Hadoop system
 	    Configuration conf = sc.hadoopConfiguration();//new Configuration();
-	    conf.set("fs.defaultFS","hdfs://localhost:9000");
+	    //conf.set("fs.defaultFS","hdfs://localhost:9000");
 	    System.out.println("Connecting to -- "+conf.get("fs.defaultFS"));
 	    
 		try {
