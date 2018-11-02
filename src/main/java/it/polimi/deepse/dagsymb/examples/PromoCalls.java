@@ -32,7 +32,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 @SuppressWarnings("resource")
 public class PromoCalls {
     public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths){
-        JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); conf.set("fs.defaultFS","hdfs://localhost:9000");
+        JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
         long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).count();
         long localLongCalls = sc.textFile(UserCallDB.getLast24HoursLocalCalls())
                 .filter((String o) -> { 
