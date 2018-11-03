@@ -19,9 +19,9 @@ public class UserCallDB
 	
 	private static String customer = UUID.randomUUID().toString();
 
-	private static String currentMonthCalls = "currentMonthCalls.txt";
-	private static String last24HoursLocalCalls = "last24HoursLocalCalls.txt";
-	private static String last24HoursAbroadCalls = "last24HoursAbroadCalls.txt";
+	private static String currentMonthCalls = "/user/ubuntu/currentMonthCalls.txt";
+	private static String last24HoursLocalCalls = "/user/ubuntu/last24HoursLocalCalls.txt";
+	private static String last24HoursAbroadCalls = "/user/ubuntu/last24HoursAbroadCalls.txt";
 
 	public static String getCurrentMonthCalls(){
 		return currentMonthCalls;
