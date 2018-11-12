@@ -15,10 +15,10 @@ public class Launcher {
    */
 
     public static void main(String[] args) {
-      PromoCalls promoCalls0 = new PromoCalls(); //args[10] is the IGuardEvaluator implementation FQ Classname
-      UserCallDB.addCallsToLast24HoursLocalCalls(Integer.parseInt(args[4]), Integer.parseInt(args[5]));
-      UserCallDB.addCallsToLast24HoursAbroadCalls(Integer.parseInt(args[6]), Integer.parseInt(args[7]));
-      UserCallDB.addCallsToMonthCalls(Integer.parseInt(args[8]), Integer.parseInt(args[9]));
-      promoCalls0.run(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+      PromoCalls promoCalls0 = new PromoCalls(); //args[0] is the IGuardEvaluator implementation FQ Classname
+      UserCallDB.addCallsToLast24HoursLocalCalls(Integer.parseInt(args[5]), Integer.parseInt(args[6]));
+      UserCallDB.addCallsToLast24HoursAbroadCalls(Integer.parseInt(args[7]), Integer.parseInt(args[8]));
+      UserCallDB.addCallsToMonthCalls(Integer.parseInt(args[9]), Integer.parseInt(args[10]));
+      promoCalls0.run(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
   }
 }
