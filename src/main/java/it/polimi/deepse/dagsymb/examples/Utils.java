@@ -38,8 +38,8 @@ public class Utils
 	}
 	
 	public static void createRandomCallForCaller(String filename, String callerId, int callLength, int size){
-		
-		JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);
+		//JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);//
+		JavaSparkContext sc = new JavaSparkContext(new SparkConf()/*.setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);
 		//Get configuration of Hadoop system
 	    Configuration conf = sc.hadoopConfiguration();//new Configuration();
 	    //conf.set("fs.defaultFS","hdfs://localhost:9000");
