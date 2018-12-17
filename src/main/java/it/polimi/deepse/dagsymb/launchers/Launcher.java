@@ -8,17 +8,20 @@ import it.polimi.deepse.dagsymb.examples.UserCallDB;
 
 public class Launcher {
 
-  //Test case number: 0
+  //Test case number: depemds on argumenys passed
   /*
-   * 1 covered goal:
+   * 1 covered goal: depends on parameters passed
    * Goal 1. com.xspark.varyingdag.examples.calls.PromoCalls.run_driver(IJJI)V: path condition EvoSuiteWrapper_0_2 (id = 0)
    */
 
     public static void main(String[] args) {
-      PromoCalls promoCalls0 = new PromoCalls(); //args[0] is the IGuardEvaluator implementation FQ Classname
-      UserCallDB.addCallsToLast24HoursLocalCalls(Integer.parseInt(args[5]), Integer.parseInt(args[6]));
-      UserCallDB.addCallsToLast24HoursAbroadCalls(Integer.parseInt(args[7]), Integer.parseInt(args[8]));
-      UserCallDB.addCallsToMonthCalls(Integer.parseInt(args[9]), Integer.parseInt(args[10]));
-      promoCalls0.run(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+      PromoCalls promoCalls0 = new PromoCalls(); //args[0] is the IGuardEvaluator implementation Class FQ Classname
+      //UserCallDB.addCallsToLast24HoursLocalCalls(Integer.parseInt(args[5]), Integer.parseInt(args[6]));
+      //UserCallDB.addCallsToLast24HoursAbroadCalls(Integer.parseInt(args[7]), Integer.parseInt(args[8]));
+      //UserCallDB.addCallsToMonthCalls(Integer.parseInt(args[9]), Integer.parseInt(args[10]));
+      //promoCalls0.run(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+      promoCalls0.run(Integer.parseInt(args[1]), Long.parseLong(args[2]), Long.parseLong(args[3]), Integer.parseInt(args[4]),
+    		  		  Integer.parseInt(args[5]), Integer.parseInt(args[6]), Integer.parseInt(args[7]), Integer.parseInt(args[8]),
+    				  Integer.parseInt(args[9]), Integer.parseInt(args[10]));
   }
 }

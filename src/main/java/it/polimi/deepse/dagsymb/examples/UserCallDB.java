@@ -59,5 +59,16 @@ public class UserCallDB
 		Utils.createRandomCallForCaller("last24HoursAbroadCalls.txt", customer, callLength, size);
 	}
 
+	public static void addCallsToMonthCalls(JavaSparkContext sc, int callLength, int size){
+		Utils.createRandomCallForCaller(sc, "currentMonthCalls.txt", customer, callLength, size);
+	}
+
+	public static void addCallsToLast24HoursLocalCalls(JavaSparkContext sc, int callLength, int size){
+		Utils.createRandomCallForCaller(sc, "last24HoursLocalCalls.txt", customer, callLength, size);
+	}
+
+	public static void addCallsToLast24HoursAbroadCalls(JavaSparkContext sc, int callLength, int size){
+		Utils.createRandomCallForCaller(sc, "last24HoursAbroadCalls.txt", customer, callLength, size);
+	}
 
 }

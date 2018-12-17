@@ -38,8 +38,8 @@ public class Utils
 	}
 	
 	public static void createRandomCallForCaller(String filename, String callerId, int callLength, int size){
-		//JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);//
-		JavaSparkContext sc = new JavaSparkContext(new SparkConf()/*.setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);
+		
+		JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);
 		//Get configuration of Hadoop system
 	    Configuration conf = sc.hadoopConfiguration();//new Configuration();
 	    //conf.set("fs.defaultFS","hdfs://localhost:9000");
@@ -73,5 +73,33 @@ public class Utils
 	    	System.out.println(e.getMessage());
 	    	};
 	    sc.close();
+	}
+	
+public static void createRandomCallForCaller(JavaSparkContext sc, String filename, String callerId, int callLength, int size){
+		
+		//JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExampleGenData")/*.setMaster("local[4]")*/);
+		//Get configuration of Hadoop system
+	    Configuration conf = sc.hadoopConfiguration();//new Configuration();
+	    //conf.set("fs.defaultFS","hdfs://localhost:9000");
+	    System.out.println("Connecting to -- "+conf.get("fs.defaultFS"));
+	    
+		try {
+			URI uri = URI.create(conf.get("fs.defaultFS") + "/" + filename);
+		    FileSystem fs = FileSystem.get(uri, conf);
+		    OutputStream output = fs.create(new Path(filename));
+		    System.out.println("Output: "+output.toString());
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output));
+	    
+			for (int i=0; i<size; ++i) {
+		      String line = callerId + " " + UUID.randomUUID().toString() + " " + callLength + " " + callLength * 0.2;
+	      	  writer.write(line + "\n");
+	        };
+	        writer.flush();
+	        writer.close();
+	        fs.close();
+	    } catch (IOException e) { 
+	    	System.out.println(e.getMessage());
+	    	};
+	    //sc.close();
 	}
 }
