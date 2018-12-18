@@ -8,9 +8,9 @@ import it.polimi.deepse.dagsymb.examples.UserCallDB;
 
 public class Launcher {
 
-  //Test case number: depemds on argumenys passed
+  //Test case number: depends on arguments passed
   /*
-   * 1 covered goal: depends on parameters passed
+   * 1 covered goal: depends on arguments passed
    * Goal 1. com.xspark.varyingdag.examples.calls.PromoCalls.run_driver(IJJI)V: path condition EvoSuiteWrapper_0_2 (id = 0)
    */
 

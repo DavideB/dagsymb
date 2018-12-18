@@ -14,7 +14,7 @@ public class Launcher7 {
    * Goal 1. com.xspark.varyingdag.examples.calls.PromoCalls.run_driver(IJJI)V: path condition EvoSuiteWrapper_0_7 (id = 0)
    */
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 	  int threshold = 1942;
       long minLocalLongCalls = 1942;
       long minAbroadLongCalls = 1942;

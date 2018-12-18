@@ -15,9 +15,23 @@ public class Launcher4 {
    */
 
     public static void main(String[] args) {
+	  int threshold = 2100;
+      long minLocalLongCalls = 2100;
+      long minAbroadLongCalls = 2100;
+      int pastMonths = 1;
+      int last24HLocalCallsLength = 3502;
+      int last24HLocalCallsSize = 3502;
+      int last24HAbroadCallsLength = 3502;
+      int last24HAbroadCallsSize = 3502;
+      int MonthCallsLength = 2990;
+      int MonthCallsSize = 3000;
       PromoCalls promoCalls0 = new PromoCalls();
-      UserCallDB.addCallsToLast24HoursLocalCalls(3502, 3502);
-      UserCallDB.addCallsToLast24HoursAbroadCalls(3502, 3502);
-      promoCalls0.run(2100, 2100, 2100, 1);
+      //UserCallDB.addCallsToLast24HoursLocalCalls(3502, 3502);
+      //UserCallDB.addCallsToLast24HoursAbroadCalls(3502, 3502);
+      //promoCalls0.run(2100, 2100, 2100, 1);
+      promoCalls0.run(threshold, minLocalLongCalls, minAbroadLongCalls, pastMonths, 
+	  		  last24HLocalCallsLength, last24HLocalCallsSize, 
+	  		  last24HAbroadCallsLength, last24HAbroadCallsSize, 
+	  		  MonthCallsLength, MonthCallsSize);
   }
 }
