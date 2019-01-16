@@ -32,7 +32,7 @@ public class PromoCalls {
         UserCallDB.addCallsToLast24HoursAbroadCalls(sc, last24HAbroadCallsLength, last24HAbroadCallsSize);
         UserCallDB.addCallsToMonthCalls(sc, MonthCallsLength, MonthCallsSize);
         long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).count();
-        long localLongCalls = sc.textFile(UserCallDB.getLast24HoursLocalCalls())
+        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls())
                 .filter((String o) -> { 
                 	String[] ss = o.split(" "); //("\\s+")
                     System.out.println(ss[2]);
@@ -41,7 +41,7 @@ public class PromoCalls {
                     return Integer.parseInt(ss[2]) > threshold;
                 }).count();
 
-        long abroadLongCalls = sc.textFile(UserCallDB.getLast24HoursAbroadCalls())
+        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls())
                 .filter((String o) -> { String[] ss = o.split(" "); return Integer.parseInt(ss[2]) > threshold;}).count();
 
         System.out.println("#PATH: 0");
@@ -76,7 +76,7 @@ public class PromoCalls {
     public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths){
         JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
         long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).count();
-        long localLongCalls = sc.textFile(UserCallDB.getLast24HoursLocalCalls())
+        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls())
                 .filter((String o) -> { 
                 	String[] ss = o.split(" "); //("\\s+")
                     System.out.println(ss[2]);
@@ -85,7 +85,7 @@ public class PromoCalls {
                     return Integer.parseInt(ss[2]) > threshold;
                 }).count();
 
-        long abroadLongCalls = sc.textFile(UserCallDB.getLast24HoursAbroadCalls())
+        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls())
                 .filter((String o) -> { String[] ss = o.split(" "); return Integer.parseInt(ss[2]) > threshold;}).count();
 
         System.out.println("#PATH: 0");
