@@ -31,8 +31,8 @@ public class PromoCalls {
         UserCallDB.addCallsToLast24HoursLocalCalls(sc, last24HLocalCallsLength, last24HLocalCallsSize);
         UserCallDB.addCallsToLast24HoursAbroadCalls(sc, last24HAbroadCallsLength, last24HAbroadCallsSize);
         UserCallDB.addCallsToMonthCalls(sc, MonthCallsLength, MonthCallsSize);
-        long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).count();
-        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls())
+        long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500).count();
+        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500)
                 .filter((String o) -> { 
                 	String[] ss = o.split(" "); //("\\s+")
                     System.out.println(ss[2]);
@@ -41,31 +41,31 @@ public class PromoCalls {
                     return Integer.parseInt(ss[2]) > threshold;
                 }).count();
 
-        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls())
+        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), 500)
                 .filter((String o) -> { String[] ss = o.split(" "); return Integer.parseInt(ss[2]) > threshold;}).count();
 
         System.out.println("#PATH: 0");
 
         if (localLongCalls > minLocalLongCalls || abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 1");
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
         }
 
         if (localLongCalls > minLocalLongCalls) {
             System.out.println("#PATH: 2");
 
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
 
             for (int i = 1; i <= pastMonths; i++) {
                 System.out.println("#PATH: 3");
-                sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getPastMonthCalls(i)).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+                sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getPastMonthCalls(i), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
             }
         }
 
         if (abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 4");
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
         }
 
         System.out.println("#PATH: 5");
@@ -75,8 +75,8 @@ public class PromoCalls {
 
     public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths){
         JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
-        long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).count();
-        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls())
+        long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500).count();
+        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500)
                 .filter((String o) -> { 
                 	String[] ss = o.split(" "); //("\\s+")
                     System.out.println(ss[2]);
@@ -85,31 +85,31 @@ public class PromoCalls {
                     return Integer.parseInt(ss[2]) > threshold;
                 }).count();
 
-        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls())
+        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), 500)
                 .filter((String o) -> { String[] ss = o.split(" "); return Integer.parseInt(ss[2]) > threshold;}).count();
 
         System.out.println("#PATH: 0");
 
         if (localLongCalls > minLocalLongCalls || abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 1");
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
         }
 
         if (localLongCalls > minLocalLongCalls) {
             System.out.println("#PATH: 2");
 
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
 
             for (int i = 1; i <= pastMonths; i++) {
                 System.out.println("#PATH: 3");
-                sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getPastMonthCalls(i)).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+                sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getPastMonthCalls(i), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
             }
         }
 
         if (abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 4");
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls()).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
         }
 
         System.out.println("#PATH: 5");
