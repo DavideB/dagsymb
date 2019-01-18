@@ -21,16 +21,17 @@ public class Launcher3 {
       int pastMonths = 0;
       int last24HLocalCallsLength = 2251;
       int last24HLocalCallsSize = 2251;
-      int last24HAbroadCallsLength = 2635;
-      int last24HAbroadCallsSize = 2635;
+      int last24HAbroadCallsLength = 0;
+      int last24HAbroadCallsSize = 0;
       int MonthCallsLength = 2990;
       int MonthCallsSize = 3000;
+      int num_partitions = 500;
       PromoCalls promoCalls0 = new PromoCalls();
       //UserCallDB.addCallsToLast24HoursLocalCalls(2251, 2251);
       //promoCalls0.run(1811, 1707, 3102L, 0);
       promoCalls0.run(threshold, minLocalLongCalls, minAbroadLongCalls, pastMonths, 
 	  		  last24HLocalCallsLength, last24HLocalCallsSize, 
 	  		  last24HAbroadCallsLength, last24HAbroadCallsSize, 
-	  		  MonthCallsLength, MonthCallsSize);
+	  		  MonthCallsLength, MonthCallsSize, num_partitions);
   }
 }

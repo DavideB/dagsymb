@@ -25,6 +25,7 @@ public class Launcher4 {
       int last24HAbroadCallsSize = 3502;
       int MonthCallsLength = 2990;
       int MonthCallsSize = 3000;
+      int num_partitions = 500;
       PromoCalls promoCalls0 = new PromoCalls();
       //UserCallDB.addCallsToLast24HoursLocalCalls(3502, 3502);
       //UserCallDB.addCallsToLast24HoursAbroadCalls(3502, 3502);
@@ -32,6 +33,6 @@ public class Launcher4 {
       promoCalls0.run(threshold, minLocalLongCalls, minAbroadLongCalls, pastMonths, 
 	  		  last24HLocalCallsLength, last24HLocalCallsSize, 
 	  		  last24HAbroadCallsLength, last24HAbroadCallsSize, 
-	  		  MonthCallsLength, MonthCallsSize);
+	  		  MonthCallsLength, MonthCallsSize, num_partitions);
   }
 }

@@ -26,13 +26,13 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 @SuppressWarnings("resource")
 public class PromoCalls {
-    public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths, int last24HLocalCallsLength, int last24HLocalCallsSize, int last24HAbroadCallsLength, int last24HAbroadCallsSize, int MonthCallsLength, int MonthCallsSize){
+    public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths, int last24HLocalCallsLength, int last24HLocalCallsSize, int last24HAbroadCallsLength, int last24HAbroadCallsSize, int MonthCallsLength, int MonthCallsSize, int num_partitions){
         JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
         UserCallDB.addCallsToLast24HoursLocalCalls(sc, last24HLocalCallsLength, last24HLocalCallsSize);
         UserCallDB.addCallsToLast24HoursAbroadCalls(sc, last24HAbroadCallsLength, last24HAbroadCallsSize);
         UserCallDB.addCallsToMonthCalls(sc, MonthCallsLength, MonthCallsSize);
-        long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500).count();
-        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500)
+        long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), num_partitions).count();
+        long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), num_partitions)
                 .filter((String o) -> { 
                 	String[] ss = o.split(" "); //("\\s+")
                     System.out.println(ss[2]);
@@ -41,31 +41,31 @@ public class PromoCalls {
                     return Integer.parseInt(ss[2]) > threshold;
                 }).count();
 
-        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), 500)
+        long abroadLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), num_partitions)
                 .filter((String o) -> { String[] ss = o.split(" "); return Integer.parseInt(ss[2]) > threshold;}).count();
 
         System.out.println("#PATH: 0");
 
         if (localLongCalls > minLocalLongCalls || abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 1");
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), num_partitions).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).count();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursAbroadCalls(), num_partitions).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.5; }).count();
         }
 
         if (localLongCalls > minLocalLongCalls) {
             System.out.println("#PATH: 2");
 
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), num_partitions).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).count();
 
             for (int i = 1; i <= pastMonths; i++) {
                 System.out.println("#PATH: 3");
-                sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getPastMonthCalls(i), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+                sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getPastMonthCalls(i), num_partitions).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).count();
             }
         }
 
         if (abroadLongCalls > minAbroadLongCalls){
             System.out.println("#PATH: 4");
-            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), 500).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).collect();
+            sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getCurrentMonthCalls(), num_partitions).map((String o) -> { String[] ss = o.split(" "); return ss[0]+" "+ss[1]+ss[2]+" "+Double.parseDouble(ss[3]) * 0.95; }).count();
         }
 
         System.out.println("#PATH: 5");

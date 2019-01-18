@@ -18,18 +18,19 @@ public class Launcher1 {
       long minLocalLongCalls = 1994;
       long minAbroadLongCalls = 1994;
       int pastMonths = 0;
-      int last24HLocalCallsLength = 3361;
-      int last24HLocalCallsSize = 1397;
-      int last24HAbroadCallsLength = 3361;
-      int last24HAbroadCallsSize = 1397;
+      int last24HLocalCallsLength = 0;
+      int last24HLocalCallsSize = 0;
+      int last24HAbroadCallsLength = 0;
+      int last24HAbroadCallsSize = 0;
       int MonthCallsLength = 2990;
       int MonthCallsSize = 3000;
+      int num_partitions = 500;
       PromoCalls promoCalls0 = new PromoCalls();
       //promoCalls0.run(1994, 1994, 1994, 0);
       promoCalls0.run(threshold, minLocalLongCalls, minAbroadLongCalls, pastMonths, 
 	  		    last24HLocalCallsLength, last24HLocalCallsSize, 
 	  		    last24HAbroadCallsLength, last24HAbroadCallsSize, 
-	  		    MonthCallsLength, MonthCallsSize);
+	  		    MonthCallsLength, MonthCallsSize, num_partitions);
         
   }
 }
