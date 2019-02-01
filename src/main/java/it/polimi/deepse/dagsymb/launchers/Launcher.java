@@ -19,7 +19,7 @@ public class Launcher {
       boolean genData = false;
       String appName = "";
       if (args[12] != null && args[12].startsWith("-g")) genData = true;
-      if (args[13] != null && !args[13].startsWith("-")) appName = args[12];
+      if (args[13] != null && !args[13].startsWith("-")) appName = args[13];
       //UserCallDB.addCallsToLast24HoursLocalCalls(Integer.parseInt(args[5]), Integer.parseInt(args[6]));
       //UserCallDB.addCallsToLast24HoursAbroadCalls(Integer.parseInt(args[7]), Integer.parseInt(args[8]));
       //UserCallDB.addCallsToMonthCalls(Integer.parseInt(args[9]), Integer.parseInt(args[10]));
