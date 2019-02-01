@@ -27,7 +27,7 @@ public class PromoCalls {
     public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths, int last24HLocalCallsLength, int last24HLocalCallsSize, int last24HAbroadCallsLength, 
     		int last24HAbroadCallsSize, int MonthCallsLength, int MonthCallsSize, int num_partitions, boolean genData, String app_name){
     	String appName = ""; if (app_name != null) appName = app_name; else appName = "CallsExample";
-    	JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
+    	JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName(appName)/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
         if (genData) { 	UserCallDB.addCallsToLast24HoursLocalCalls(sc, last24HLocalCallsLength, last24HLocalCallsSize);
         				UserCallDB.addCallsToLast24HoursAbroadCalls(sc, last24HAbroadCallsLength, last24HAbroadCallsSize);
         				UserCallDB.addCallsToMonthCalls(sc, MonthCallsLength, MonthCallsSize);	};
