@@ -19,18 +19,18 @@ import org.apache.hadoop.conf.Configuration;
  * Action 'collect' is used instead of action 'saveAstextFile' for the sake of simplicity
  *
  */
-
-
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 
 @SuppressWarnings("resource")
 public class PromoCalls {
-    public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths, int last24HLocalCallsLength, int last24HLocalCallsSize, int last24HAbroadCallsLength, int last24HAbroadCallsSize, int MonthCallsLength, int MonthCallsSize, int num_partitions){
-        JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
-        UserCallDB.addCallsToLast24HoursLocalCalls(sc, last24HLocalCallsLength, last24HLocalCallsSize);
-        UserCallDB.addCallsToLast24HoursAbroadCalls(sc, last24HAbroadCallsLength, last24HAbroadCallsSize);
-        UserCallDB.addCallsToMonthCalls(sc, MonthCallsLength, MonthCallsSize);
+    public void run(final int threshold, long minLocalLongCalls, long minAbroadLongCalls, int pastMonths, int last24HLocalCallsLength, int last24HLocalCallsSize, int last24HAbroadCallsLength, 
+    		int last24HAbroadCallsSize, int MonthCallsLength, int MonthCallsSize, int num_partitions, boolean genData, String app_name){
+    	String appName = ""; if (app_name != null) appName = app_name; else appName = "CallsExample";
+    	JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("CallsExample")/*.setMaster("local[4]")*/); Configuration conf = sc.hadoopConfiguration(); //conf.set("fs.defaultFS","hdfs://localhost:9000");
+        if (genData) { 	UserCallDB.addCallsToLast24HoursLocalCalls(sc, last24HLocalCallsLength, last24HLocalCallsSize);
+        				UserCallDB.addCallsToLast24HoursAbroadCalls(sc, last24HAbroadCallsLength, last24HAbroadCallsSize);
+        				UserCallDB.addCallsToMonthCalls(sc, MonthCallsLength, MonthCallsSize);	};
         long z = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), num_partitions).count();
         long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), num_partitions)
                 .filter((String o) -> { 

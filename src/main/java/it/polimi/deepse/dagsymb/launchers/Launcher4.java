@@ -27,12 +27,16 @@ public class Launcher4 {
       int MonthCallsSize = 3000;
       int num_partitions = 500;
       PromoCalls promoCalls0 = new PromoCalls();
+      boolean genData = false;
+      String appName = "";
+      if (args[12] != null && args[12].startsWith("-g")) genData = true;
+      if (args[13] != null && !args[13].startsWith("-")) appName = args[12];
       //UserCallDB.addCallsToLast24HoursLocalCalls(3502, 3502);
       //UserCallDB.addCallsToLast24HoursAbroadCalls(3502, 3502);
       //promoCalls0.run(2100, 2100, 2100, 1);
       promoCalls0.run(threshold, minLocalLongCalls, minAbroadLongCalls, pastMonths, 
 	  		  last24HLocalCallsLength, last24HLocalCallsSize, 
 	  		  last24HAbroadCallsLength, last24HAbroadCallsSize, 
-	  		  MonthCallsLength, MonthCallsSize, num_partitions);
+	  		  MonthCallsLength, MonthCallsSize, num_partitions, genData, appName);
   }
 }
