@@ -35,9 +35,9 @@ public class PromoCalls {
         long localLongCalls = sc.textFile(conf.get("fs.defaultFS") + "/" + UserCallDB.getLast24HoursLocalCalls(), num_partitions)
                 .filter((String o) -> { 
                 	String[] ss = o.split(" "); //("\\s+")
-                    System.out.println(ss[2]);
-                    System.out.println(threshold);
-                    System.out.println(Integer.parseInt(ss[2]) > threshold);
+                    //System.out.println(ss[2]);
+                    //System.out.println(threshold);
+                    //System.out.println(Integer.parseInt(ss[2]) > threshold);
                     return Integer.parseInt(ss[2]) > threshold;
                 }).count();
 
